@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "seed": "node  seeds/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.10.0"
+  }
+}
