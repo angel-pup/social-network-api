@@ -1,14 +1,12 @@
 const connection = require('../config/connection');
-const userSeeds = require('./user-seeds');
-const thoughtSeeds = require('./thought-seeds');
-const reactionSeeds = require('./reaction-seeds');
+const seedUsers = require('./user-seeds');
+const seedThoughts = require('./thought-seeds');
 
 const seedDatabase = async () => {
   try {
     connection.once('open', async () => {
-      await userSeeds();
-      await thoughtSeeds();
-      await reactionSeeds();
+      await seedUsers();
+      await seedThoughts();
       process.exit(0);
     });
   } catch (err) {

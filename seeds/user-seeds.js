@@ -21,7 +21,6 @@ const seedUsers = async () => {
   const users = await User.insertMany(userSeeds);
 
   console.log(`${users.length} users seeded to database.`);
-  process.exit(0);
 };
 
-seedUsers();
+module.exports = seedUsers;
