@@ -1,8 +1,12 @@
-const { connect, connection } = require('mongoose');
+const mongoose = require('mongoose');
+const { connection } = require('mongoose');
 require('dotenv').config();
 
+// Enable strict query mode
+mongoose.set('strictQuery', true);
+
 // Connect to MongoDB database using Mongoose
-mongoose.connect('mongodb://localhost/social-media-db', {
+mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

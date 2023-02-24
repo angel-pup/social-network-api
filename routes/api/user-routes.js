@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Thought } = require("../../models");
+const { User, Thought } = require("../../models").default;
 
 // Create a new user
 router.post("/users", async (req, res) => {
@@ -13,7 +13,7 @@ router.post("/users", async (req, res) => {
 });
 
 // Get all users
-app.get("/api/users", async (req, res) => {
+router.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -23,7 +23,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 // Get a single user by id
-app.get("/api/users/:id", async (req, res) => {
+router.get("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -37,7 +37,7 @@ app.get("/api/users/:id", async (req, res) => {
 });
 
 // Delete a single user by id
-app.delete("/api/users/:id", async (req, res) => {
+router.delete("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deletedUser = await User.findByIdAndDelete(id);
@@ -58,7 +58,7 @@ app.delete("/api/users/:id", async (req, res) => {
 });
 
 // Update a single user by id
-app.put("/api/users/:id", async (req, res) => {
+router.put("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { username, email } = req.body;
@@ -81,7 +81,7 @@ app.put("/api/users/:id", async (req, res) => {
 });
 
 // Add a friend to a user's friend array by id
-app.post("/api/users/:userId/friends/:friendId", async (req, res) => {
+router.post("/api/users/:userId/friends/:friendId", async (req, res) => {
   try {
     const { userId, friendId } = req.params;
     const user = await User.findById(userId);
@@ -110,7 +110,7 @@ app.post("/api/users/:userId/friends/:friendId", async (req, res) => {
 });
 
 // Remove a friend from a user's friend list by id
-app.delete("/api/users/:userId/friends/:friendId", async (req, res) => {
+router.delete("/api/users/:userId/friends/:friendId", async (req, res) => {
   try {
     const { userId, friendId } = req.params;
     const user = await User.findById(userId);

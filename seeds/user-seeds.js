@@ -1,20 +1,17 @@
-const { User } = require('../models');
+const { User }  = require('../models');
 
 const userSeeds = [
   {
     username: 'johndoe',
     email: 'johndoe@example.com',
-    friends: [],
   },
   {
     username: 'janedoe',
     email: 'janedoe@example.com',
-    friends: [],
   },
   {
     username: 'johnmadden',
     email: 'madjohn@nfl.com',
-    friends: []
   }
 ];
 

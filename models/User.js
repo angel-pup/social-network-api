@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -41,7 +42,7 @@ const userSchema = new mongoose.Schema({
 { timestamps: true });
 
 
-// Current unused
+// Currently unused
 // userSchema.pre('save', async function (next) {
 //     const user = this;
 //     if (!user.isModified('password')) {
@@ -56,7 +57,7 @@ const userSchema = new mongoose.Schema({
 //     }
 // });
   
-// Current unused
+// Currently unused
 // userSchema.methods.comparePassword = async function (password) {
 //     return bcrypt.compare(password, this.password);
 // };
