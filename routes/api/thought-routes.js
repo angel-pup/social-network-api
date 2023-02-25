@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { User, Thought } = require("../../models");
 
 // GET all thoughts
-router.get("/api/thoughts", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const thoughts = await Thought.find().sort({ createdAt: -1 });
     res.json(thoughts);
@@ -13,7 +13,7 @@ router.get("/api/thoughts", async (req, res) => {
 });
 
 // GET single thought by id
-router.get("/api/thoughts/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const thought = await Thought.findById(id);
@@ -28,13 +28,13 @@ router.get("/api/thoughts/:id", async (req, res) => {
 });
 
 // POST create a new thought (and push to associated user's thoughts array field)
-router.post("/api/thoughts", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { thoughtText, username, userId } = req.body;
     const thought = await Thought.create({ thoughtText, username });
 
     // Add thought to user's thoughts array field
-    const user = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       userId,
       { $push: { thoughts: thought._id } },
       { new: true }
@@ -48,7 +48,7 @@ router.post("/api/thoughts", async (req, res) => {
 });
 
 // PUT update a thought by id
-router.put("/api/thoughts/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { thoughtText } = req.body;
@@ -69,23 +69,21 @@ router.put("/api/thoughts/:id", async (req, res) => {
 });
 
 // DELETE remove thought by id (and remove from user's thoughts array field)
-router.delete("/api/thoughts/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const thought = await Thought.findByIdAndDelete(id);
+
+    await User.findOneAndUpdate(
+      thought.username,
+      { $pull: { thoughts: id} }
+    );
 
     if (!thought) {
       return res.status(404).json({ message: "Thought not found" });
     }
 
-    // Remove thought from user's thoughts array field
-    const user = await User.findByIdAndUpdate(
-      thought.userId,
-      { $pull: { thoughts: thought._id } },
-      { new: true }
-    );
-
-    res.json(thought);
+    res.status(200).json(thought);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -93,7 +91,7 @@ router.delete("/api/thoughts/:id", async (req, res) => {
 });
 
 // POST create a reaction for a single thought
-router.post("/api/thoughts/:thoughtId/reactions", async (req, res) => {
+router.post("/:thoughtId/reactions", async (req, res) => {
   try {
     const { thoughtId } = req.params;
     const { reactionBody, username } = req.body;
@@ -115,9 +113,7 @@ router.post("/api/thoughts/:thoughtId/reactions", async (req, res) => {
 });
 
 // DELETE remove a reaction from a single thought
-router.delete(
-  "/api/thoughts/:thoughtId/reactions/:reactionId",
-  async (req, res) => {
+router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
       const { thoughtId, reactionId } = req.params;
 
