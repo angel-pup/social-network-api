@@ -6,9 +6,12 @@ require('dotenv').config();
 mongoose.set('strictQuery', true);
 
 // Connect to MongoDB database using Mongoose
-mongoose.connect(process.env.CONNECTION_STRING, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+    process.env.MONGODB_URI || process.env.CONNECTION_STRING,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
+);
 
 module.exports = connection;
