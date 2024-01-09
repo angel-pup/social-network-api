@@ -19,8 +19,6 @@ Simple RESTful API demonstration of mongoose ODM / MongoDB hosted on Atlas with 
 - You can choose to set up the DB yourself or you can run seed to seed the database with dummy data: "npm run seed"
 
 ## Usage
-##### Utilize the following link with the paths below: https://warm-temple-65548.herokuapp.com
-
 - path - request type: response: output
 
 ##### Users
